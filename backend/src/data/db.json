@@ -1,4 +1,127 @@
 {
-  "products": [],
-  "categories": []
+  "products": [
+    {
+      "id": 1,
+      "name": "Smartphone Nova X1",
+      "description": "Pantalla OLED 6.5 pulgadas, 128GB, camara triple.",
+      "price": 599.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Smartphone+1",
+      "category": "smartphone",
+      "stock": 25
+    },
+    {
+      "id": 2,
+      "name": "Smartphone Nova X2 Pro",
+      "description": "Procesador de 8 nucleos, 256GB y bateria de larga duracion.",
+      "price": 749.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Smartphone+2",
+      "category": "smartphone",
+      "stock": 18
+    },
+    {
+      "id": 3,
+      "name": "Smartwatch Pulse Fit",
+      "price": 199.99,
+      "category": "smartwatch",
+      "stock": 40,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Smartwatch+1"
+    },
+    {
+      "id": 4,
+      "name": "Smartwatch Pulse Pro",
+      "description": "Resistente al agua, pantalla AMOLED y pagos NFC.",
+      "price": 249.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Smartwatch+2",
+      "category": "smartwatch",
+      "stock": 30
+    },
+    {
+      "id": 5,
+      "name": "Laptop Aero 14",
+      "description": "Ultrabook 14 pulgadas, 16GB RAM y SSD 512GB.",
+      "price": 1099.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Laptop+1",
+      "category": "laptop",
+      "stock": 12
+    },
+    {
+      "id": 6,
+      "name": "Laptop Creator 16",
+      "description": "Pantalla 16 pulgadas, GPU dedicada y 1TB SSD.",
+      "price": 1499.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Laptop+2",
+      "category": "laptop",
+      "stock": 8
+    },
+    {
+      "id": 7,
+      "name": "Tablet ViewPad 11",
+      "description": "Pantalla 11 pulgadas, 128GB y modo productividad.",
+      "price": 399.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Tablet+1",
+      "category": "tablet",
+      "stock": 22
+    },
+    {
+      "id": 8,
+      "name": "Auriculares SoundMax",
+      "description": "Inalambricos, cancelacion de ruido y carga rapida.",
+      "price": 129.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Audio+1",
+      "category": "audio",
+      "stock": 35
+    },
+    {
+      "id": 9,
+      "name": "Parlante Wave Mini",
+      "description": "Portatil, resistente al agua y con 12 horas de bateria.",
+      "price": 89.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Audio+2",
+      "category": "audio",
+      "stock": 28
+    },
+    {
+      "id": 10,
+      "name": "Cargador rapido 65W",
+      "description": "Compatible con carga rapida y puerto USB-C.",
+      "price": 39.99,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Accesorio+1",
+      "category": "accesorio",
+      "stock": 50
+    },
+    {
+      "id": 11,
+      "name": "Iphone 10",
+      "price": 1000,
+      "category": "smartphone",
+      "stock": 10,
+      "imageUrl": "https://via.placeholder.com/300x200?text=Smartphone+2"
+    }
+  ],
+  "categories": [
+    {
+      "id": "smartphone",
+      "name": "Smartphones"
+    },
+    {
+      "id": "smartwatch",
+      "name": "Smartwatches"
+    },
+    {
+      "id": "laptop",
+      "name": "Laptops"
+    },
+    {
+      "id": "tablet",
+      "name": "Tablets"
+    },
+    {
+      "id": "audio",
+      "name": "Audio"
+    },
+    {
+      "id": "accesorio",
+      "name": "Accesorios"
+    }
+  ]
 }

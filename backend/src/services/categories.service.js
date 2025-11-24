@@ -1,6 +1,6 @@
 const categoriesRepository = require('../repositories/categories.repository');
 
-// Función que coordina la recuperación de categorías desde el repositorio de datos.
+// Funcion que coordina la recuperacion de categorias desde el repositorio de datos.
 const listCategories = () => {
   return categoriesRepository.findAll();
 };

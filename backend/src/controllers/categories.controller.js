@@ -1,9 +1,9 @@
 const categoriesService = require('../services/categories.service');
 
-// Función que gestiona la solicitud de listado de categorías y retorna una respuesta JSON.
+// Funcion que gestiona la solicitud de listado de categorias y retorna la respuesta en JSON.
 const getAllCategories = (req, res) => {
   const categories = categoriesService.listCategories();
-  res.json({ categorias: categories });
+  res.status(200).json({ categorias: categories });
 };
 
 module.exports = { getAllCategories };
