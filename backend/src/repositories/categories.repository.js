@@ -1,26 +1,44 @@
-const fs = require('fs');
-const path = require('path');
+const Category = require('../models/category.model');
 
-const dbPath = path.join(__dirname, '../data/db.json');
-
-// Funcion que lee el archivo de base de datos y entrega su estructura como objeto.
-const readDatabase = () => {
-  const rawData = fs.readFileSync(dbPath, 'utf8');
-  return JSON.parse(rawData);
+// Funcion auxiliar para devolver un objeto plano sin campos internos de MongoDB.
+const sanitizeCategory = (doc) => {
+  if (!doc) return null;
+  const plain = doc.toObject ? doc.toObject() : doc;
+  const { _id, __v, ...rest } = plain;
+  return rest;
 };
 
-// Funcion que retorna todas las categorias disponibles en el archivo de datos.
-const findAll = () => {
-  const db = readDatabase();
-  return db.categories || [];
+// Funcion que ahora recupera las categorias directamente desde MongoDB.
+const findAll = async () => {
+  try {
+    const categories = await Category.find().lean();
+    return categories.map(sanitizeCategory);
+  } catch (error) {
+    console.error('Error al listar categorias desde MongoDB', error);
+    throw error;
+  }
 };
 
-// Funcion que busca una categoria por su identificador.
-const findById = (id) => {
-  const db = readDatabase();
-  const categories = db.categories || [];
-  const category = categories.find((item) => String(item.id) === String(id));
-  return category || null;
+// Funcion que busca una categoria en MongoDB por su identificador textual.
+const findById = async (id) => {
+  try {
+    const category = await Category.findOne({ id: String(id) }).lean();
+    return sanitizeCategory(category);
+  } catch (error) {
+    console.error('Error al buscar una categoria en MongoDB', error);
+    throw error;
+  }
 };
 
-module.exports = { findAll, findById };
+// Funcion que inserta una categoria en MongoDB manteniendo su id legible.
+const create = async (category) => {
+  try {
+    const newCategory = await Category.create(category);
+    return sanitizeCategory(newCategory);
+  } catch (error) {
+    console.error('Error al crear una categoria en MongoDB', error);
+    throw error;
+  }
+};
+
+module.exports = { findAll, findById, create };

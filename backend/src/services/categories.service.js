@@ -1,7 +1,7 @@
 const categoriesRepository = require('../repositories/categories.repository');
 
-// Funcion que coordina la recuperacion de categorias desde el repositorio de datos.
-const listCategories = () => {
+// Funcion que coordina la recuperacion de categorias desde MongoDB sin exponer detalles al controlador.
+const listCategories = async () => {
   return categoriesRepository.findAll();
 };
 

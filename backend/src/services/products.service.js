@@ -33,14 +33,19 @@ const validateProductData = (product) => {
   return '';
 };
 
-// Funcion que retorna todos los productos sin aplicar filtros adicionales.
-const listProducts = () => {
+// Funcion que retorna todos los productos desde MongoDB sin aplicar filtros adicionales.
+const listProducts = async () => {
   return productsRepository.findAll();
 };
 
-// Funcion que obtiene un producto por su identificador.
-const getProductById = (id) => {
-  const product = productsRepository.findById(id);
+// Funcion que obtiene un producto por su identificador numerico.
+const getProductById = async (id) => {
+  const numericId = Number(id);
+  if (Number.isNaN(numericId)) {
+    return { error: 'Producto no encontrado' };
+  }
+
+  const product = await productsRepository.findById(numericId);
   if (!product) {
     return { error: 'Producto no encontrado' };
   }
@@ -48,7 +53,7 @@ const getProductById = (id) => {
 };
 
 // Funcion que crea un nuevo producto despues de validar sus datos.
-const createProduct = (payload) => {
+const createProduct = async (payload) => {
   const validationMessage = validateProductData(payload);
   if (validationMessage !== '') {
     return { error: validationMessage };
@@ -56,19 +61,25 @@ const createProduct = (payload) => {
 
   const productToCreate = {
     name: payload.name,
+    description: payload.description,
     price: Number(payload.price),
     category: payload.category,
     stock: Number(payload.stock),
     imageUrl: payload.imageUrl,
   };
 
-  const created = productsRepository.create(productToCreate);
+  const created = await productsRepository.create(productToCreate);
   return { data: created };
 };
 
 // Funcion que actualiza un producto existente con datos validados.
-const updateProduct = (id, payload) => {
-  const existing = productsRepository.findById(id);
+const updateProduct = async (id, payload) => {
+  const numericId = Number(id);
+  if (Number.isNaN(numericId)) {
+    return { error: 'Producto no encontrado', notFound: true };
+  }
+
+  const existing = await productsRepository.findById(numericId);
   if (!existing) {
     return { error: 'Producto no encontrado', notFound: true };
   }
@@ -80,13 +91,14 @@ const updateProduct = (id, payload) => {
 
   const productToUpdate = {
     name: payload.name,
+    description: payload.description,
     price: Number(payload.price),
     category: payload.category,
     stock: Number(payload.stock),
     imageUrl: payload.imageUrl,
   };
 
-  const updated = productsRepository.update(id, productToUpdate);
+  const updated = await productsRepository.update(numericId, productToUpdate);
   if (!updated) {
     return { error: 'No se pudo actualizar el producto', notFound: true };
   }
@@ -94,9 +106,14 @@ const updateProduct = (id, payload) => {
   return { data: updated };
 };
 
-// Funcion que elimina un producto existente por identificador.
-const deleteProduct = (id) => {
-  const removed = productsRepository.remove(id);
+// Funcion que elimina un producto existente por identificador numerico.
+const deleteProduct = async (id) => {
+  const numericId = Number(id);
+  if (Number.isNaN(numericId)) {
+    return { error: 'Producto no encontrado', notFound: true };
+  }
+
+  const removed = await productsRepository.remove(numericId);
   if (!removed) {
     return { error: 'Producto no encontrado', notFound: true };
   }

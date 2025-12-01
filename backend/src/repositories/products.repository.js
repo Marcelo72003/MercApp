@@ -1,93 +1,88 @@
-const fs = require('fs');
-const path = require('path');
+const Product = require('../models/product.model');
 
-const dbPath = path.join(__dirname, '../data/db.json');
-
-// Funcion que lee el archivo de base de datos y retorna su contenido como objeto.
-const readDatabase = () => {
-  const rawData = fs.readFileSync(dbPath, 'utf8');
-  return JSON.parse(rawData);
+// Funcion auxiliar para devolver un objeto plano sin campos internos de MongoDB.
+const sanitizeProduct = (doc) => {
+  if (!doc) return null;
+  const plain = doc.toObject ? doc.toObject() : doc;
+  const { _id, __v, ...rest } = plain;
+  return rest;
 };
 
-// Funcion que persiste en disco la estructura completa de la base de datos.
-const writeDatabase = (data) => {
-  const serialized = JSON.stringify(data, null, 2);
-  fs.writeFileSync(dbPath, serialized, 'utf8');
-};
-
-// Funcion que entrega todos los productos disponibles en el archivo de datos.
-const findAll = () => {
-  const db = readDatabase();
-  return db.products || [];
-};
-
-// Funcion que busca un producto por su identificador unico.
-const findById = (id) => {
-  const db = readDatabase();
-  const products = db.products || [];
-  const product = products.find((item) => String(item.id) === String(id));
-  return product || null;
-};
-
-// Funcion que crea un producto nuevo asignando un identificador incremental.
-const create = (product) => {
-  const db = readDatabase();
-  const products = db.products || [];
-  const ids = products.map((item) => Number(item.id) || 0);
-  const nextId = ids.length > 0 ? Math.max.apply(null, ids) + 1 : 1;
-  const newProduct = {
-    id: nextId,
-    name: product.name,
-    price: product.price,
-    category: product.category,
-    stock: product.stock,
-    imageUrl: product.imageUrl,
-  };
-  products.push(newProduct);
-  db.products = products;
-  writeDatabase(db);
-  return newProduct;
-};
-
-// Funcion que actualiza un producto existente conservando su identificador.
-const update = (id, product) => {
-  const db = readDatabase();
-  const products = db.products || [];
-  const index = products.findIndex((item) => String(item.id) === String(id));
-
-  if (index === -1) {
-    return null;
+// Funcion que ahora consulta MongoDB para obtener todos los productos almacenados.
+const findAll = async () => {
+  try {
+    const products = await Product.find().lean();
+    return products.map(sanitizeProduct);
+  } catch (error) {
+    console.error('Error al listar productos desde MongoDB', error);
+    throw error;
   }
-
-  const updatedProduct = {
-    id: products[index].id,
-    name: product.name,
-    price: product.price,
-    category: product.category,
-    stock: product.stock,
-    imageUrl: product.imageUrl,
-  };
-
-  products[index] = updatedProduct;
-  db.products = products;
-  writeDatabase(db);
-  return updatedProduct;
 };
 
-// Funcion que elimina un producto por su identificador y persiste el cambio.
-const remove = (id) => {
-  const db = readDatabase();
-  const products = db.products || [];
-  const index = products.findIndex((item) => String(item.id) === String(id));
-
-  if (index === -1) {
-    return false;
+// Funcion que consulta MongoDB para recuperar un producto por su id numerico.
+const findById = async (id) => {
+  try {
+    const numericId = Number(id);
+    if (Number.isNaN(numericId)) {
+      return null;
+    }
+    const product = await Product.findOne({ id: numericId }).lean();
+    return sanitizeProduct(product);
+  } catch (error) {
+    console.error('Error al buscar un producto en MongoDB', error);
+    throw error;
   }
+};
 
-  products.splice(index, 1);
-  db.products = products;
-  writeDatabase(db);
-  return true;
+// Funcion que escribe en MongoDB creando un producto nuevo con id incremental.
+const create = async (product) => {
+  try {
+    const lastProduct = await Product.findOne().sort({ id: -1 }).lean();
+    const nextId =
+      lastProduct && typeof lastProduct.id === 'number'
+        ? lastProduct.id + 1
+        : Date.now();
+
+    const newProduct = await Product.create({ id: nextId, ...product });
+    return sanitizeProduct(newProduct);
+  } catch (error) {
+    console.error('Error al crear un producto en MongoDB', error);
+    throw error;
+  }
+};
+
+// Funcion que actualiza un producto directamente en MongoDB manteniendo su id numerico.
+const update = async (id, product) => {
+  try {
+    const numericId = Number(id);
+    if (Number.isNaN(numericId)) {
+      return null;
+    }
+    const updated = await Product.findOneAndUpdate(
+      { id: numericId },
+      { ...product },
+      { new: true, lean: true }
+    );
+    return sanitizeProduct(updated);
+  } catch (error) {
+    console.error('Error al actualizar un producto en MongoDB', error);
+    throw error;
+  }
+};
+
+// Funcion que elimina un producto en MongoDB en lugar de borrar del archivo.
+const remove = async (id) => {
+  try {
+    const numericId = Number(id);
+    if (Number.isNaN(numericId)) {
+      return false;
+    }
+    const deleted = await Product.findOneAndDelete({ id: numericId });
+    return Boolean(deleted);
+  } catch (error) {
+    console.error('Error al eliminar un producto en MongoDB', error);
+    throw error;
+  }
 };
 
 module.exports = { findAll, findById, create, update, remove };
