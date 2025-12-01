@@ -460,6 +460,55 @@ pre {
   }
 }
 
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .hero {
+    padding: 5rem 0 3.5rem;
+  }
+
+  .hero-card {
+    max-width: 100%;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .diagram {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 0;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .diagram {
+    width: 100%;
+  }
+}
+
 @media (max-width: 720px) {
   table, thead, tbody, th, td, tr {
     display: block;
@@ -506,5 +555,11 @@ pre {
 
   .diagram-actions {
     flex-direction: column;
+  }
+
+  .nav-links {
+    width: calc(100% - 2rem);
+    right: 1rem;
+    left: 1rem;
   }
 }
