@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MercApp | Despliegue SPA y API</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar" id="inicio">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-icon">🦇</span>
+        <span>MercApp Deploy</span>
+      </div>
+      <button class="nav-toggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#arquitectura">Arquitectura</a>
+        <a href="#endpoints">Endpoints</a>
+        <a href="#guia">Guía Local</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="bat-signal"></div>
+      </div>
+      <div class="container">
+        <div class="hero-card">
+          <p class="pill">Universidad Politécnica Salesiana</p>
+          <h1>MercApp – Catálogo de Productos con API propia</h1>
+          <p class="subtitle">SPA en Vue 3 desplegada en Netlify, API en Railway y base de datos en MongoDB Atlas.</p>
+          <div class="info-grid">
+            <div>
+              <span class="label">Asignatura</span>
+              <strong>Aplicaciones Web</strong>
+            </div>
+            <div>
+              <span class="label">Docente</span>
+              <strong>José Roberto Jaime Carriel</strong>
+            </div>
+            <div>
+              <span class="label">Alumno</span>
+              <strong>Marcelo Darwin Peña Ochoa</strong>
+            </div>
+            <div>
+              <span class="label">Semestre – Carrera</span>
+              <strong>Cuarto Semestre – Ingeniería de Software</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resumen">
+      <div class="container">
+        <div class="section-header">
+          <p class="pill">Resumen Técnico del Sistema</p>
+          <h2>Stack y despliegue listos para producción</h2>
+        </div>
+        <div class="cards-grid">
+          <article class="card">
+            <div class="icon">🎯</div>
+            <h3>SPA en Vue 3</h3>
+            <p>Arquitectura Composition API con rutas, vistas y composables.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🛰️</div>
+            <h3>API Node + Express</h3>
+            <p>Endpoints REST para productos y categorías listos para la nube.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🗄️</div>
+            <h3>MongoDB Atlas</h3>
+            <p>Base de datos gestionada con conexión segura por variables de entorno.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🔐</div>
+            <h3>Variables .env</h3>
+            <p>Configuración con .env y .env.example para API y frontend.</p>
+          </article>
+          <article class="card">
+            <div class="icon">☁️</div>
+            <h3>Frontend en Netlify</h3>
+            <p>Build estático en dist, servido desde CDN con VITE_API_URL remoto.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🚂</div>
+            <h3>Backend en Railway</h3>
+            <p>API pública con MONGODB_URI y PORT gestionados por el entorno.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="arquitectura">
+      <div class="container">
+        <div class="section-header">
+          <p class="pill">Arquitectura de Despliegue</p>
+          <h2>Flujo de usuario a datos</h2>
+        </div>
+        <div class="diagram">
+          <div class="diagram-node">Usuario</div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-node accent">Netlify<br><span>Frontend Vue 3</span></div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-node">Railway<br><span>API Node/Express</span></div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-node accent">MongoDB Atlas</div>
+        </div>
+        <div class="diagram-actions">
+          <a class="btn" href="https://mercappunidad4.netlify.app/" target="_blank" rel="noopener">Ver Frontend</a>
+          <a class="btn ghost" href="https://mercapp-production-6dbb.up.railway.app/api" target="_blank" rel="noopener">Ver API en Railway</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="endpoints">
+      <div class="container">
+        <div class="section-header">
+          <p class="pill">Tabla de Endpoints</p>
+          <h2>REST listos para MercApp</h2>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Método</th>
+                <th>Endpoint</th>
+                <th>Ejemplo JSON</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Método">GET</td>
+                <td data-label="Endpoint">/api/products</td>
+                <td data-label="Ejemplo JSON"><pre>{ "limit": 20 }</pre></td>
+              </tr>
+              <tr>
+                <td data-label="Método">GET</td>
+                <td data-label="Endpoint">/api/products/:id</td>
+                <td data-label="Ejemplo JSON"><pre>{ "id": "6564abc..." }</pre></td>
+              </tr>
+              <tr>
+                <td data-label="Método">POST</td>
+                <td data-label="Endpoint">/api/products</td>
+                <td data-label="Ejemplo JSON"><pre>{ "name": "Nuevo", "price": 19.9 }</pre></td>
+              </tr>
+              <tr>
+                <td data-label="Método">PUT</td>
+                <td data-label="Endpoint">/api/products/:id</td>
+                <td data-label="Ejemplo JSON"><pre>{ "price": 21.5 }</pre></td>
+              </tr>
+              <tr>
+                <td data-label="Método">DELETE</td>
+                <td data-label="Endpoint">/api/products/:id</td>
+                <td data-label="Ejemplo JSON"><pre>{ "ok": true }</pre></td>
+              </tr>
+              <tr>
+                <td data-label="Método">GET</td>
+                <td data-label="Endpoint">/api/categories</td>
+                <td data-label="Ejemplo JSON"><pre>{ "total": 5 }</pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guia">
+      <div class="container">
+        <div class="section-header">
+          <p class="pill">Guía de Ejecución Local</p>
+          <h2>Pasos rápidos (timeline)</h2>
+        </div>
+        <div class="timeline">
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Clonar repo</h3>
+              <p>`git clone` y entrar a MercApp.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Configurar backend</h3>
+              <p>Instalar dependencias y copiar .env.example a .env con MONGODB_URI.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Variables de entorno</h3>
+              <p>PORT y MONGODB_URI para API; VITE_API_URL para el frontend.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Ejecutar Node</h3>
+              <p>`npm run dev` en backend para servir /api/products y /api/categories.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Configurar frontend</h3>
+              <p>En frontend definir VITE_API_URL (Railway en producción, localhost en dev).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Ejecutar npm run dev</h3>
+              <p>Levantar Vite en http://localhost:5173 y probar la SPA.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-content">
+              <h3>Producción</h3>
+              <p>Deploy: Railway para API y Netlify para frontend usando la misma VITE_API_URL.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacto">
+    <div class="container footer-grid">
+      <div>
+        <p class="pill">Contacto</p>
+        <h3>Marcelo Darwin Peña Ochoa</h3>
+        <p>Aplicaciones Web – Cuarto Semestre</p>
+      </div>
+      <div>
+        <p class="note">Proyecto desarrollado para Unidad 3 y desplegado en Unidad 4.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
