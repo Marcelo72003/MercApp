@@ -39,3 +39,8 @@ API REST con CRUD de productos y listado de categorÃ­as; SPA con Vue 3, Vue Ro
 - El backend se desplegara en Railway leyendo las variables MONGODB_URI y PORT proporcionadas por el entorno de ejecucion.
 - El frontend se desplegara en Netlify consumiendo la API por medio de VITE_API_URL apuntando a la URL publica de la API.
 
+### Frontend en Netlify (resumen rapido)
+- Definir la variable `VITE_API_URL` apuntando a la URL de Railway (`https://mercapp-production-6dbb.up.railway.app/api`).
+- En la carpeta `frontend`: `npm install` y luego `npm run build` para generar `dist`.
+- Publicar `frontend/dist` en Netlify (Base directory: `frontend`, Publish directory: `frontend/dist`).
+

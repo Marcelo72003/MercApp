@@ -1,8 +1,9 @@
-// Variable base que se toma desde las variables de entorno expuestas por Vite.
-const DEFAULT_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+// DEFAULT_API_URL lee la URL base desde variables de entorno expuestas por Vite.
+const DEFAULT_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'; // En desarrollo cae a localhost si no hay variable.
 
 // Funcion que entrega metodos basicos para consumir la API usando fetch.
 const useApi = (baseUrl = DEFAULT_API_URL) => {
+  // Usamos variables de entorno para cambiar el backend sin tocar el codigo (ej. apuntar a Railway en produccion).
   // Funcion que obtiene datos desde una ruta especifica.
   const get = async (path) => {
     try {
